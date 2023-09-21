@@ -1,0 +1,9 @@
+LICENSE
+README.md
+setup.py
+src/pyEPVis.py
+src/pyEPVis.egg-info/PKG-INFO
+src/pyEPVis.egg-info/SOURCES.txt
+src/pyEPVis.egg-info/dependency_links.txt
+src/pyEPVis.egg-info/requires.txt
+src/pyEPVis.egg-info/top_level.txt
