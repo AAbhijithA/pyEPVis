@@ -1,0 +1,152 @@
+# pyEPVis
+A package that allows you to easily visualize single or two variable functions and allows you to visualize particle/point movements along two or three Dimensions with an interactive plotly visualization.
+
+## Used for Development
+![Python](https://img.shields.io/badge/Python-FFD43B?style=for-the-badge&logo=python&logoColor=blue)![NumPy](https://img.shields.io/badge/Numpy-777BB4?style=for-the-badge&logo=numpy&logoColor=white)![Plotly](https://img.shields.io/badge/Plotly-239120?style=for-the-badge&logo=plotly&logoColor=white)
+
+## Using the package
+
+Install the package using the command
+```
+pip install pyEPVis
+```
+### Visualizing Single Variable Functions
+```
+"""
+This function takes a string and evaluates it as a function of x i.e. f(x) and plots a graph for the function.
+    Args:
+        ----Required Arguments----
+        formula (string): formula in terms of x and y for the function f(x)
+        xstart (float): starting extreme of x value to evaluate f(x) from
+        xend (float): ending extreme of x value to evaluate f(x) to
+        step (float): incrementation to continuously evaluate f(x) with i.e. (x +/- step)
+        ----Optional Arguments----
+        color (string): Default 'lime'
+        width (float): Default 2, width of the curve
+        title (string): Default to the formula parameter, title of the plot
+        xtitle (string): Default to 'X-axis', x-axis title
+        ytitle (string): Default to 'Y-axis', y-axis title
+    Returns:
+        plotly.graph_objects.Figure
+    Raises:
+        StepsError: step must be higher than 0
+        xIntervalError: xend is lesser than xstart
+        Other Errors such as invalid evaluation
+        wrong argument passed as colorscale
+    Note:
+        [Assuming the output is given to a variable fig]
+        The graph can be shown using the output with fig.show()
+        The graph can be further modified using fig.update_layout, refer here: https://plotly.com/python/reference/layout/
+"""
+from pyEPVis import do_fx_plot
+do_fx_plot(formula = "x**4 - 10*(x**3) - 2*(x**2) - 5*x + 4",xstart = -100,xend = 100,step = 1, color = "steelblue").show()
+```
+![plotfx](pkgWork/plotfx.png)
+
+### Visualizing Double Variable Functions
+```
+"""
+This function takes a string and evaluates it as a function of x and y i.e. f(x,y) and plots a graph for the function.
+    Args:
+        ----Required Arguments----
+        formula (string): formula in terms of x and y for the function f(x,y)
+        xstart (float): starting extreme of x value to evaluate f(x,y) from
+        xend (float): ending extreme of x value to evaluate f(x,y) to
+        ystart (float): starting extreme of y value to evaluate f(x,y) from
+        yend (float): ending extreme of y value to evaluate f(x,y) to
+        step (float): incrementation to continuously evaluate f(x,y) with i.e. (x +/- step, y +/- step)
+        ----Optional Arguments----
+        colorscale (string): Default 'Electric', can be any of the following (Blackbody, Bluered, Blues, C ividis,
+        Earth, Electric, Greens, Greys, Hot, Jet, Picnic, Portland, Rainbow, RdBu, Reds, Viridis, YlGnBu, YlOrRd)
+        title (string): Default to the formula parameter, title of the plot
+        xtitle (string): Default to 'X-axis', x-axis title
+        ytitle (string): Default to 'Y-axis', y-axis title
+        ztitle (string): Default to 'Z-axis', z-axis title
+    Returns:
+        plotly.graph_objects.Figure
+    Raises:
+        StepsError: step must be higher than 0
+        xIntervalError: xend is lesser than xstart
+        yIntervalError: yend is lesser than ystart
+        Other Errors such as invalid evaluation
+        wrong argument passed as colorscale
+    Note:
+        [Assuming the output is given to a variable fig]
+        The graph can be shown using the output with fig.show()
+        The graph can be further modified using fig.update_layout, refer here: https://plotly.com/python/reference/layout/
+"""
+from pyEPVis import do_fxy_plot
+do_fxy_plot(formula = "(x**2 + y**2)/(x - y)",xstart = -5,xend = 5,ystart = -5,yend = 5,step = 0.1,colorscale = 'Viridis').show()
+```
+![plotfx](pkgWork/plotfxy.png)
+
+### Visualizing 2D Particle Movements
+```
+"""
+This function takes a set of particles and animates its movements
+    Args:
+        ----Required Arguments----
+        x (list): A list of list of x coordinates of n particles for iterations equal to number of rows.
+        y (list): A list of list of y coordinates of n particles for iterations equal to number of rows.
+        ----Optional Arguments----
+        size (float): Default size is 7, size of particles.
+        colors (list): Default all particles are colored 'steelblue', a list of strings with n colors.
+        title (string): Title of the plot
+        timeperframe (float): Default value is 1000, time taken to move to the next frame (milliseconds)
+    Returns:
+        plotly.graph_objects.Figure
+    Raises:
+        DimensionError: x and y list don't have the same dimensions
+        TPFError: timeperframe must be greater than 0
+        Other Errors such as invalid evaluation
+        wrong argument passed as colors
+    Note:
+        [Assuming the output is given to a variable fig]
+        The graph can be shown using the output with fig.show()
+        The graph can be further modified using fig.update_layout, refer here: https://plotly.com/python/reference/layout/
+"""
+from pyEPVis import animate_xy_particles
+animate_xy_particles(x = [[1,4,7],[4,7,1],[7,1,4],[1,4,7]],y = [[1,4,1],[4,1,1],[1,1,4],[1,4,1]],colors = ["red","blue","green"]).show()
+```
+![vis2D](pkgWork/vis2D.gif)
+
+### Visualizing 3D Particle Movements
+```
+"""
+This function takes a set of particles and animates its movements
+    Args:
+        ----Required Arguments----
+        x (list): A list of list of x coordinates of n particles for iterations equal to number of rows.
+        y (list): A list of list of y coordinates of n particles for iterations equal to number of rows.
+        z (list): A list of list of z coordinates of n particles for iterations equal to number of rows.
+        ----Optional Arguments----
+        size (float): Default size is 7, size of particles.
+        colors (list): Default all particles are colored 'steelblue', a list of strings with n colors.
+        title (string): Title of the plot.
+        framespmov (int): Default value is 10, Frames for movement from one position to another, must be greater than 1.
+        timeperframe (float): Default value is 1000, time taken to move to the next frame (milliseconds) "high frametime with framespmov results in a smooth animation"
+    Returns:
+        plotly.graph_objects.Figure
+    Raises:
+        DimensionError: x, y, and z lists don't have the same dimensions
+        FramesError: framespmov should be greater or equal to 1
+        TPFError: timeperframe must be greater than 0
+        Other Errors such as invalid evaluation
+        wrong argument passed as colors
+    Note:
+        [Assuming the output is given to a variable fig]
+        The graph can be shown using the output with fig.show()
+        The graph can be further modified using fig.update_layout, refer here: https://plotly.com/python/reference/layout/
+"""
+from pyEPVis import animate_xyz_particles
+animate_xyz_particles(x = [[1,8,7],[3,3,6],[1,1,1]],y = [[5,2,2],[7,9,0],[5,2,6]],z = [[1,2,3],[4,5,6],[7,1,1]],colors = ["red","green","blue"],framespmov = 15,timeperframe = 100).show()
+```
+![vis3D](pkgWork/vis3D.gif)
+
+## Warnings
+* ***(Note: for function evaluation please stick to x and y and not other variables as it will lead to evaluation errors and framespmove should be high in order to visualize the movement smoothly in animate_xyz_particles)***
+
+## Other Help
+* Use the **help(enter_function_name_here)** function to refer to the full documentation of the function.
+* The figure is a plotly.graph_objects.Figure variable it can be further modified for including more plots inside the figure.
+* All math package syntaxes along with python expressions are supported as well, to use the math package in your formula and use it as follows: **math.enter_function_name()**
