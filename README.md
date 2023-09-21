@@ -124,7 +124,7 @@ This function takes a set of particles and animates its movements
         colors (list): Default all particles are colored 'steelblue', a list of strings with n colors.
         title (string): Title of the plot.
         framespmov (int): Default value is 10, Frames for movement from one position to another, must be greater than 1.
-        timeperframe (float): Default value is 1000, time taken to move to the next frame (milliseconds) "high frametime with framespmov results in a smooth animation"
+        timeperframe (float): Default value is 1000, time taken to move to the next frame (milliseconds) "low frametime with high framespmov results in a smooth animation"
     Returns:
         plotly.graph_objects.Figure
     Raises:
